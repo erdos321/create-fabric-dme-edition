@@ -7,8 +7,9 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents.EntitySizeEvent;
 import io.github.fabricators_of_create.porting_lib.util.UsernameCache;
+
+import net.fabricmc.fabric.api.entity.FakePlayer;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -17,7 +18,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CKinetics;
 
-import io.github.fabricators_of_create.porting_lib.fake_players.FakePlayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -26,7 +26,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -105,10 +104,12 @@ public class DeployerFakePlayer extends FakePlayer {
 		return owner == null ? super.getUUID() : owner;
 	}
 
-	public static void deployerHasEyesOnHisFeet(EntitySizeEvent event) {
-		if (event.entity instanceof DeployerFakePlayer)
-			event.eyeHeight = 0;
-	}
+	public static float deployerHasEyesOnHisFeet(Entity entity, float eyeHeight) {
+		if (entity instanceof DeployerFakePlayer) {
+			eyeHeight = 0;
+		}
+        return eyeHeight;
+    }
 
 	public static boolean deployerCollectsDropsFromKilledEntities(LivingEntity target, DamageSource source, Collection<ItemEntity> drops, int lootingLevel, boolean recentlyHit) {
 		Entity trueSource = source.getEntity();

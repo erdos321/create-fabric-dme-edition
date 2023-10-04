@@ -156,13 +156,13 @@ public class DeployerHandler {
 		if (!entities.isEmpty()) {
 			Entity entity = entities.get(world.random.nextInt(entities.size()));
 			boolean success = false;
-			entity.startCapturingDrops();
+			entity.captureDrops();
 
 			// Use on entity
 			if (mode == Mode.USE) {
 				InteractionResult cancelResult = UseEntityCallback.EVENT.invoker().interact(player, world, hand, entity, new EntityHitResult(entity));
 				if (cancelResult == InteractionResult.FAIL) {
-					entity.finishCapturingDrops();
+					entity.captureDrops();
 					return;
 				}
 				if (cancelResult == null || cancelResult == InteractionResult.PASS) {
@@ -203,7 +203,7 @@ public class DeployerHandler {
 				success = true;
 			}
 
-			List<ItemEntity> capturedDrops = entity.finishCapturingDrops();
+			List<ItemEntity> capturedDrops = entity.captureDrops().stream().toList();
 			capturedDrops.forEach(e -> player.getInventory()
 				.placeItemBackInInventory(e.getItem()));
 			if (success)

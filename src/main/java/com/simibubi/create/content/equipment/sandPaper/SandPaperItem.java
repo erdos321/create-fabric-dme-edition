@@ -13,7 +13,9 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.AxeItemAccessor;
 import io.github.fabricators_of_create.porting_lib.tool.ToolAction;
 import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
+import io.github.fabricators_of_create.porting_lib.tool.addons.ToolActionItem;
 import io.github.fabricators_of_create.porting_lib.util.NBTSerializer;
+import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -44,7 +46,7 @@ import net.minecraft.world.phys.Vec3;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SandPaperItem extends Item implements CustomUseEffectsItem {
+public class SandPaperItem extends Item implements CustomUseEffectsItem, ToolActionItem {
 
 	public SandPaperItem(Properties properties) {
 		super(properties.defaultDurability(8));
@@ -136,7 +138,7 @@ public class SandPaperItem extends Item implements CustomUseEffectsItem {
 			}
 
 			if (!polished.isEmpty()) {
-				if (player.isFake()) {
+				if (player instanceof FakePlayer) {
 					player.drop(polished, false, false);
 				} else {
 					player.getInventory()
