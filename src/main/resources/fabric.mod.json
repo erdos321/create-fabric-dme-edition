@@ -65,7 +65,6 @@
     "porting_lib_models": ">=${port_lib_models_version}",
     "porting_lib_client_events": ">=${port_lib_client_events_version}",
 
-    "forgeconfigapiport": ">=${forge_config_version}",
     "milk": ">=${milk_lib_version}",
     "reach-entity-attributes": ">=${reach_entity_attributes_version}"
   },
