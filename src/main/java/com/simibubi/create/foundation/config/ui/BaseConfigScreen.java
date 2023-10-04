@@ -8,6 +8,9 @@ import java.util.function.UnaryOperator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
+
 import org.lwjgl.glfw.GLFW;
 
 import com.simibubi.create.Create;
@@ -25,8 +28,6 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class BaseConfigScreen extends ConfigScreen {
 
@@ -44,7 +45,7 @@ public class BaseConfigScreen extends ConfigScreen {
 	 * If you are a Create Addon dev and want to change the config labels,
 	 * add a default action here.
 	 *
-	 * Make sure you call either {@link #withSpecs(ForgeConfigSpec, ForgeConfigSpec, ForgeConfigSpec)}
+	 * Make sure you call either {@link #withSpecs(ModConfigSpec, ModConfigSpec, ModConfigSpec)}
 	 * or {@link #searchForSpecsInModContainer()}
 	 *
 	 * @param modID     the modID of your addon/mod
@@ -67,9 +68,9 @@ public class BaseConfigScreen extends ConfigScreen {
 	protected BoxWidget others;
 	protected BoxWidget title;
 
-	protected ForgeConfigSpec clientSpec;
-	protected ForgeConfigSpec commonSpec;
-	protected ForgeConfigSpec serverSpec;
+	protected ModConfigSpec clientSpec;
+	protected ModConfigSpec commonSpec;
+	protected ModConfigSpec serverSpec;
 	protected String clientTitle = "Client Config";
 	protected String commonTitle = "Common Config";
 	protected String serverTitle = "Server Config";
@@ -93,7 +94,7 @@ public class BaseConfigScreen extends ConfigScreen {
 
 	/**
 	 * If you have static references to your Configs or ConfigSpecs (like Create does in {@link AllConfigs}),
-	 * please use {@link #withSpecs(ForgeConfigSpec, ForgeConfigSpec, ForgeConfigSpec)} instead
+	 * please use {@link #withSpecs(ModConfigSpec, ModConfigSpec, ModConfigSpec)} instead
 	 */
 	public BaseConfigScreen searchForSpecsInModContainer() {
 		if (!ConfigHelper.hasAnyForgeConfig(this.modID)){
@@ -101,19 +102,19 @@ public class BaseConfigScreen extends ConfigScreen {
 		}
 
 		try {
-			clientSpec = ConfigHelper.findForgeConfigSpecFor(ModConfig.Type.CLIENT, this.modID);
+			clientSpec = ConfigHelper.findForgeConfigSpecFor(ConfigType.CLIENT, this.modID);
 		} catch (Exception e) {
 			Create.LOGGER.debug("Unable to find ClientConfigSpec for mod: " + this.modID);
 		}
 
 		try {
-			commonSpec = ConfigHelper.findForgeConfigSpecFor(ModConfig.Type.COMMON, this.modID);
+			commonSpec = ConfigHelper.findForgeConfigSpecFor(ConfigType.COMMON, this.modID);
 		} catch (Exception e) {
 			Create.LOGGER.debug("Unable to find CommonConfigSpec for mod: " + this.modID);
 		}
 
 		try {
-			serverSpec = ConfigHelper.findForgeConfigSpecFor(ModConfig.Type.SERVER, this.modID);
+			serverSpec = ConfigHelper.findForgeConfigSpecFor(ConfigType.SERVER, this.modID);
 		} catch (Exception e) {
 			Create.LOGGER.debug("Unable to find ServerConfigSpec for mod: " + this.modID);
 		}
@@ -121,7 +122,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		return this;
 	}
 
-	public BaseConfigScreen withSpecs(@Nullable ForgeConfigSpec client, @Nullable ForgeConfigSpec common, @Nullable ForgeConfigSpec server) {
+	public BaseConfigScreen withSpecs(@Nullable ModConfigSpec client, @Nullable ModConfigSpec common, @Nullable ModConfigSpec server) {
 		clientSpec = client;
 		commonSpec = common;
 		serverSpec = server;
@@ -150,7 +151,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		addRenderableWidget(clientConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15 - 30, 200, 16).showingElement(clientText));
 
 		if (clientSpec != null) {
-			clientConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.CLIENT, clientSpec)));
+			clientConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ConfigType.CLIENT, clientSpec)));
 			clientText.withElementRenderer(BoxWidget.gradientFactory.apply(clientConfigWidget));
 		} else {
 			clientConfigWidget.active = false;
@@ -162,7 +163,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		addRenderableWidget(commonConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15, 200, 16).showingElement(commonText));
 
 		if (commonSpec != null) {
-			commonConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.COMMON, commonSpec)));
+			commonConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ConfigType.COMMON, commonSpec)));
 			commonText.withElementRenderer(BoxWidget.gradientFactory.apply(commonConfigWidget));
 		} else {
 			commonConfigWidget.active = false;
@@ -187,7 +188,7 @@ public class BaseConfigScreen extends ConfigScreen {
 									"Gameplay settings can only be accessed from the in-game menu after joining a World or Server."),
 							Palette.ALL_GRAY));
 		} else {
-			serverConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.SERVER, serverSpec)));
+			serverConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ConfigType.SERVER, serverSpec)));
 			serverText.withElementRenderer(BoxWidget.gradientFactory.apply(serverConfigWidget));
 		}
 

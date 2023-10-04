@@ -11,9 +11,9 @@ import com.simibubi.create.foundation.gui.element.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.element.TextStencilElement;
 import com.simibubi.create.foundation.gui.widget.BoxWidget;
 
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class EnumEntry extends ValueEntry<Enum<?>> {
 
@@ -23,7 +23,7 @@ public class EnumEntry extends ValueEntry<Enum<?>> {
 	protected BoxWidget cycleLeft;
 	protected BoxWidget cycleRight;
 
-	public EnumEntry(String label, ForgeConfigSpec.ConfigValue<Enum<?>> value, ForgeConfigSpec.ValueSpec spec) {
+	public EnumEntry(String label, ModConfigSpec.ConfigValue<Enum<?>> value, ModConfigSpec.ValueSpec spec) {
 		super(label, value, spec);
 
 		valueText = new TextStencilElement(Minecraft.getInstance().font, "YEP").centered(true, true);

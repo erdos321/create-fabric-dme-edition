@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 
 import com.simibubi.create.foundation.utility.CameraAngleAnimationService;
 
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -32,7 +34,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class SConfigureConfigPacket extends SimplePacketBase {
 
@@ -88,7 +89,7 @@ public class SConfigureConfigPacket extends SimplePacketBase {
 			return;
 		}
 
-		if (configPath.getType() != ModConfig.Type.CLIENT) {
+		if (configPath.getType() != ConfigType.CLIENT) {
 			Create.LOGGER.warn("Received type-mismatched config packet on client");
 			return;
 		}

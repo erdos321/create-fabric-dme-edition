@@ -21,23 +21,23 @@ import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.utility.Color;
 import com.simibubi.create.foundation.utility.Couple;
 
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractSelectionListAccessor;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class FlwSubMenuConfigScreen extends SubMenuConfigScreen {
 
 	private final FlwConfig flwConfig;
 
-	public FlwSubMenuConfigScreen(Screen parent, String title, ModConfig.Type type, FlwConfig flwConfig) {
+	public FlwSubMenuConfigScreen(Screen parent, String title, ConfigType type, FlwConfig flwConfig) {
 		super(parent, title, type, null, null);
 		this.flwConfig = flwConfig;
 	}
 
-	public FlwSubMenuConfigScreen(Screen parent, ModConfig.Type type, FlwConfig flwConfig) {
+	public FlwSubMenuConfigScreen(Screen parent, ConfigType type, FlwConfig flwConfig) {
 		this(parent, "root", type, flwConfig);
 	}
 
@@ -179,7 +179,7 @@ public class FlwSubMenuConfigScreen extends SubMenuConfigScreen {
 		list.search(highlights.stream().findFirst().orElse(""));
 
 		//extras for server configs
-		if (type != ModConfig.Type.SERVER)
+		if (type != ConfigType.SERVER)
 			return;
 		if (minecraft.hasSingleplayerServer())
 			return;

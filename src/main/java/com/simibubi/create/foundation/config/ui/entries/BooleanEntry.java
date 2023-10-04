@@ -6,9 +6,9 @@ import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.element.RenderElement;
 import com.simibubi.create.foundation.gui.widget.BoxWidget;
 
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.client.gui.GuiGraphics;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractWidgetAccessor;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class BooleanEntry extends ValueEntry<Boolean> {
 
@@ -16,7 +16,7 @@ public class BooleanEntry extends ValueEntry<Boolean> {
 	RenderElement disabled;
 	BoxWidget button;
 
-	public BooleanEntry(String label, ForgeConfigSpec.ConfigValue<Boolean> value, ForgeConfigSpec.ValueSpec spec) {
+	public BooleanEntry(String label, ModConfigSpec.ConfigValue<Boolean> value, ModConfigSpec.ValueSpec spec) {
 		super(label, value, spec);
 
 		enabled = AllIcons.I_CONFIRM.asStencil()

@@ -5,10 +5,10 @@ import java.util.Objects;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class CConfigureConfigPacket<T> extends SimplePacketBase {
 
@@ -43,11 +43,11 @@ public class CConfigureConfigPacket<T> extends SimplePacketBase {
 				if (sender == null || !sender.hasPermissions(2))
 					return;
 
-				ForgeConfigSpec spec = ConfigHelper.findForgeConfigSpecFor(ModConfig.Type.SERVER, modID);
+				ModConfigSpec spec = ConfigHelper.findForgeConfigSpecFor(ConfigType.SERVER, modID);
 				if (spec == null)
 					return;
-				ForgeConfigSpec.ValueSpec valueSpec = spec.getRaw(path);
-				ForgeConfigSpec.ConfigValue<T> configValue = spec.getValues().get(path);
+				ModConfigSpec.ValueSpec valueSpec = spec.getRaw(path);
+				ModConfigSpec.ConfigValue<T> configValue = spec.getValues().get(path);
 
 				T v = (T) deserialize(configValue.get(), value);
 				if (!valueSpec.test(v))

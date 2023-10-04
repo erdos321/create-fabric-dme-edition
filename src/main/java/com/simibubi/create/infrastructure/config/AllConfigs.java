@@ -5,8 +5,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
-import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
-import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
+import io.github.fabricators_of_create.porting_lib.config.ConfigEvents;
+import io.github.fabricators_of_create.porting_lib.config.ConfigRegistry;
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.config.ModConfig;
+
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -14,12 +18,9 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.BlockStressValues;
 import com.simibubi.create.foundation.config.ConfigBase;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
-
 public class AllConfigs {
 
-	private static final Map<ModConfig.Type, ConfigBase> CONFIGS = new EnumMap<>(ModConfig.Type.class);
+	private static final Map<ConfigType, ConfigBase> CONFIGS = new EnumMap<>(ConfigType.class);
 
 	private static CClient client;
 	private static CCommon common;
@@ -37,12 +38,12 @@ public class AllConfigs {
 		return server;
 	}
 
-	public static ConfigBase byType(ModConfig.Type type) {
+	public static ConfigBase byType(ConfigType type) {
 		return CONFIGS.get(type);
 	}
 
-	private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type side) {
-		Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> {
+	private static <T extends ConfigBase> T register(Supplier<T> factory, ConfigType side) {
+		Pair<T, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(builder -> {
 			T config = factory.get();
 			config.registerAll(builder);
 			return config;
@@ -55,17 +56,17 @@ public class AllConfigs {
 	}
 
 	public static void register() {
-		client = register(CClient::new, ModConfig.Type.CLIENT);
-		common = register(CCommon::new, ModConfig.Type.COMMON);
-		server = register(CServer::new, ModConfig.Type.SERVER);
+		client = register(CClient::new, ConfigType.CLIENT);
+		common = register(CCommon::new, ConfigType.COMMON);
+		server = register(CServer::new, ConfigType.SERVER);
 
-		for (Entry<ModConfig.Type, ConfigBase> pair : CONFIGS.entrySet())
-			ForgeConfigRegistry.INSTANCE.register(Create.ID, pair.getKey(), pair.getValue().specification);
+		for (Entry<ConfigType, ConfigBase> pair : CONFIGS.entrySet())
+			ConfigRegistry.registerConfig(Create.ID, pair.getKey(), pair.getValue().specification);
 
 		BlockStressValues.registerProvider(Create.ID, server().kinetics.stressValues);
 
-		ModConfigEvents.loading(Create.ID).register(AllConfigs::onLoad);
-		ModConfigEvents.reloading(Create.ID).register(AllConfigs::onReload);
+		ConfigEvents.LOADING.register(AllConfigs::onLoad);
+		ConfigEvents.RELOADING.register(AllConfigs::onReload);
 	}
 
 	public static void onLoad(ModConfig modConfig) {

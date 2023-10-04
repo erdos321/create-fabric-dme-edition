@@ -8,10 +8,10 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.config.ui.ConfigHelper;
 import com.simibubi.create.foundation.utility.Components;
 
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.config.ModConfig;
 
 /**
  * Examples:
@@ -52,7 +52,7 @@ public class ConfigCommand {
 												return 0;
 											}
 
-											if (configPath.getType() == ModConfig.Type.CLIENT) {
+											if (configPath.getType() == ConfigType.CLIENT) {
 												ServerPlayer player = ctx.getSource().getPlayerOrException();
 												AllPackets.getChannel().sendToClient(new SConfigureConfigPacket("SET" + path, value), player);
 

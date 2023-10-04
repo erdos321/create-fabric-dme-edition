@@ -8,15 +8,15 @@ import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.gui.element.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.widget.BoxWidget;
 
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.client.gui.GuiGraphics;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractWidgetAccessor;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class SubMenuEntry extends ConfigScreenList.LabeledEntry {
 
 	protected BoxWidget button;
 
-	public SubMenuEntry(SubMenuConfigScreen parent, String label, ForgeConfigSpec spec, UnmodifiableConfig config) {
+	public SubMenuEntry(SubMenuConfigScreen parent, String label, ModConfigSpec spec, UnmodifiableConfig config) {
 		super(label);
 
 		button = new BoxWidget(0, 0, 35, 16)

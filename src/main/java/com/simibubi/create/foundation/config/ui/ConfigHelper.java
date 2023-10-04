@@ -22,10 +22,10 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ConfigTracker;
-import net.minecraftforge.fml.config.IConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import io.github.fabricators_of_create.porting_lib.config.ConfigTracker;
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.config.ModConfig;
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 
 public class ConfigHelper {
 
@@ -33,19 +33,19 @@ public class ConfigHelper {
 	public static final Pattern annotationPattern = Pattern.compile("\\[@cui:([^:]*)(?::(.*))?]");
 
 	public static final Map<String, ConfigChange> changes = new HashMap<>();
-	private static final LoadingCache<String, EnumMap<ModConfig.Type, ModConfig>> configCache =
+	private static final LoadingCache<String, EnumMap<ConfigType, ModConfig>> configCache =
 		CacheBuilder.newBuilder()
 			.expireAfterAccess(5, TimeUnit.MINUTES)
-			.build(new CacheLoader<String, EnumMap<ModConfig.Type, ModConfig>>() {
+			.build(new CacheLoader<String, EnumMap<ConfigType, ModConfig>>() {
 				@Override
-				public EnumMap<ModConfig.Type, ModConfig> load(@Nonnull String key) {
+				public EnumMap<ConfigType, ModConfig> load(@Nonnull String key) {
 					return findModConfigsUncached(key);
 				}
 			});
 
 	// FIXME compat with other config libs?
-	private static EnumMap<ModConfig.Type, ModConfig> findModConfigsUncached(String modID) {
-		EnumMap<ModConfig.Type, ModConfig> configs = new EnumMap<>(ModConfig.Type.class);
+	private static EnumMap<ConfigType, ModConfig> findModConfigsUncached(String modID) {
+		EnumMap<ConfigType, ModConfig> configs = new EnumMap<>(ConfigType.class);
 		ConfigTracker.INSTANCE.configSets().forEach((type, modConfigs) -> {
 			modConfigs.forEach(modConfig -> {
 				if(modConfig.getModId().equals(modID))
@@ -55,7 +55,7 @@ public class ConfigHelper {
 		return Objects.requireNonNull(configs);
 	}
 
-	public static IConfigSpec<?> findConfigSpecFor(ModConfig.Type type, String modID) {
+	public static ModConfigSpec findConfigSpecFor(ConfigType type, String modID) {
 		if (!modID.equals(Create.ID))
 			return configCache.getUnchecked(modID)
 				.get(type)
@@ -64,10 +64,10 @@ public class ConfigHelper {
 	}
 
 	@Nullable
-	public static ForgeConfigSpec findForgeConfigSpecFor(ModConfig.Type type, String modID) {
-		IConfigSpec<?> spec = findConfigSpecFor(type, modID);
-		if (spec instanceof ForgeConfigSpec) {
-			return (ForgeConfigSpec) spec;
+	public static ModConfigSpec findForgeConfigSpecFor(ConfigType type, String modID) {
+		ModConfigSpec spec = findConfigSpecFor(type, modID);
+		if (spec instanceof ModConfigSpec) {
+			return (ModConfigSpec) spec;
 		}
 		return null;
 	}
@@ -84,20 +84,19 @@ public class ConfigHelper {
 			return configCache.getUnchecked(modID)
 				.values()
 				.stream()
-				.anyMatch(config -> config.getSpec() instanceof ForgeConfigSpec);
+				.anyMatch(config -> config.getSpec() instanceof ModConfigSpec);
 		return true;
 	}
 
 	// Directly set a value
 	public static <T> void setConfigValue(ConfigPath path, String value) throws InvalidValueException {
-		ForgeConfigSpec spec = findForgeConfigSpecFor(path.getType(), path.getModID());
+		ModConfigSpec spec = findForgeConfigSpecFor(path.getType(), path.getModID());
 		if (spec == null)
 			return;
 
 		List<String> pathList = Arrays.asList(path.getPath());
-		ForgeConfigSpec.ValueSpec valueSpec = spec.getRaw(pathList);
-		ForgeConfigSpec.ConfigValue<T> configValue = spec.getValues()
-			.get(pathList);
+		ModConfigSpec.ValueSpec valueSpec = spec.getSpec().getRaw(pathList);
+		ModConfigSpec.ConfigValue<T> configValue = spec.getValues().get(pathList);
 		T v = (T) CConfigureConfigPacket.deserialize(configValue.get(), value);
 		if (!valueSpec.test(v))
 			throw new InvalidValueException();
@@ -106,7 +105,7 @@ public class ConfigHelper {
 	}
 
 	// Add a value to the current UI's changes list
-	public static <T> void setValue(String path, ForgeConfigSpec.ConfigValue<T> configValue, T value,
+	public static <T> void setValue(String path, ModConfigSpec.ConfigValue<T> configValue, T value,
 		@Nullable Map<String, String> annotations) {
 		if (value.equals(configValue.get())) {
 			changes.remove(path);
@@ -117,7 +116,7 @@ public class ConfigHelper {
 
 	// Get a value from the current UI's changes list or the config value, if its
 	// unchanged
-	public static <T> T getValue(String path, ForgeConfigSpec.ConfigValue<T> configValue) {
+	public static <T> T getValue(String path, ModConfigSpec.ConfigValue<T> configValue) {
 		ConfigChange configChange = changes.get(path);
 		if (configChange != null)
 			// noinspection unchecked
@@ -158,7 +157,7 @@ public class ConfigHelper {
 
 	public static class ConfigPath {
 		private String modID = Create.ID;
-		private ModConfig.Type type = ModConfig.Type.CLIENT;
+		private ConfigType type = ConfigType.CLIENT;
 		private String[] path;
 
 		public static ConfigPath parse(String string) {
@@ -173,7 +172,7 @@ public class ConfigHelper {
 			}
 			String[] split = p.split("\\.");
 			try {
-				cp.type = ModConfig.Type.valueOf(split[0].toUpperCase(Locale.ROOT));
+				cp.type = ConfigType.valueOf(split[0].toUpperCase(Locale.ROOT));
 			} catch (Exception e) {
 				throw new IllegalArgumentException("path must start with either 'client.', 'common.' or 'server.'");
 			}
@@ -189,7 +188,7 @@ public class ConfigHelper {
 			return this;
 		}
 
-		public ConfigPath setType(ModConfig.Type type) {
+		public ConfigPath setType(ConfigType type) {
 			this.type = type;
 			return this;
 		}
@@ -203,7 +202,7 @@ public class ConfigHelper {
 			return modID;
 		}
 
-		public ModConfig.Type getType() {
+		public ConfigType getType() {
 			return type;
 		}
 
