@@ -251,13 +251,11 @@ publishing {
 
     repositories {
         maven {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/kessokuteatime/create-fabric")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/DM-Earth/create-fabric-dme-edition"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
