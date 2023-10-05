@@ -146,6 +146,22 @@ def recipeViewers(DependencyHandler deps) {
     }
 }
 
+machete {
+    enabled = Boolean.getBoolean("PUBLISHING") // only optimize published releases
+}
+
+tasks.register("buildOrPublish") {
+    group = "build"
+    String mavenUser = System.getenv("MAVEN_USER")
+    if (mavenUser != null && !mavenUser.isEmpty()) {
+        dependsOn(tasks.named("publish"))
+        println("prepared for publish")
+    } else {
+        dependsOn(tasks.named("build"))
+        println("prepared for build")
+    }
+}
+
 sourceSets {
     main {
         resources {
@@ -225,6 +241,28 @@ jar {
     }
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = archivesBaseName + "-${project.minecraft_version}"
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/KessokuTeaTime/create-fabric")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+    }
+}
+
 // see gradle/publishing.gradle for publishing
-//apply from: "gradle/publishing/publishing.gradle"
+// apply from: "gradle/publishing/publishing.gradle"
 apply from: "gradle/compat/compat.gradle"

@@ -8,12 +8,14 @@ publishing {
 
     repositories {
         maven {
-            url = "https://mvn.devos.one/${System.getenv("PUBLISH_SUFFIX")}/"
-            credentials {
-                username = System.getenv("MAVEN_USER")
-                password = System.getenv("MAVEN_PASS")
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/KessokuTeaTime/create-fabric")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
-            authentication { basic(BasicAuthentication) }
         }
     }
 }
