@@ -59,4 +59,4 @@ jobs:
 
             - name: publish to Maven
               if: ${{ github.event.inputs.publish }}
-              run: ./gradlew publishMod
+              run: ./gradlew publish
