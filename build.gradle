@@ -146,22 +146,6 @@ def recipeViewers(DependencyHandler deps) {
     }
 }
 
-machete {
-    enabled = Boolean.getBoolean("PUBLISHING") // only optimize published releases
-}
-
-tasks.register("buildOrPublish") {
-    group = "build"
-    String mavenUser = System.getenv("MAVEN_USER")
-    if (mavenUser != null && !mavenUser.isEmpty()) {
-        dependsOn(tasks.named("publish"))
-        println("prepared for publish")
-    } else {
-        dependsOn(tasks.named("build"))
-        println("prepared for build")
-    }
-}
-
 sourceSets {
     main {
         resources {
@@ -242,5 +226,5 @@ jar {
 }
 
 // see gradle/publishing.gradle for publishing
-apply from: "gradle/publishing/publishing.gradle"
+//apply from: "gradle/publishing/publishing.gradle"
 apply from: "gradle/compat/compat.gradle"
