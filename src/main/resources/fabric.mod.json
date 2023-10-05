@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Create Fabric Unofficial",
-  "description": "Technology that empowers the player.",
+  "description": "Create Fabric Unofficial version. Technology that empowers the player.",
   "authors": [
     "KessokuTeaTime",
     "Fabricators of Create",
@@ -46,7 +46,9 @@
     ]
   },
 
-  "mixins": [ "create.mixins.json" ],
+  "mixins": [
+    "create.mixins.json"
+  ],
   "accessWidener": "create.accesswidener",
 
   "depends": {
