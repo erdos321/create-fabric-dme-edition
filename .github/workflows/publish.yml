@@ -1,24 +1,46 @@
 name: Publish package to the GitHub Packages
 on:
     workflow_dispatch:
+        inputs:
+            publish:
+                description: Publish to Modrinth and CurseForge
+                required: true
+                default: "false"
+            patch:
+                description: Patch number, 0 for first (ex. Create 1.19.2 v0.5.0.g Patch N)
+                required: true
 jobs:
     publish:
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
+        env:
+            PUBLISH_SUFFIX: snapshots
+            MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+            CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+            PATCH_NUMBER: ${{ github.event.inputs.patch }}
+            PUBLISHING: ${{ github.event.inputs.publish }}
         steps:
-            - uses: actions/checkout@v4
-            - name: Set up Java
-              uses: actions/setup-java@v3
-              with:
-                  java-version: '17'
-                  distribution: 'temurin'
-            - name: Validate Gradle wrapper
-              uses: gradle/wrapper-validation-action@v1
-            - name: Publish package
-              uses: gradle/gradle-build-action@v2
-              with:
-                  arguments: publish
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            -   name: checkout repository
+                uses: actions/checkout@v3
+
+            -   name: make gradle wrapper executable
+                run: chmod +x ./gradlew
+
+            -   name: setup Java
+                uses: actions/setup-java@v3
+                with:
+                    distribution: temurin
+                    java-version: 17
+                    cache: gradle
+
+            -   name: build
+                run: ./gradlew buildOrPublish
+
+            -   name: capture build artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                    name: Artifacts
+                    path: build/libs/
+
+            -   name: publish to Modrinth and CurseForge
+                if: ${{ github.event.inputs.publish }}
+                run: ./gradlew publishMod

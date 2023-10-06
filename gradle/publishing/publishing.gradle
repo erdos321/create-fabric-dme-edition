@@ -39,6 +39,6 @@ static String getChangelog(File changelogFile) {
     return split[1].trim()
 }
 
-//apply from: "gradle/publishing/modrinth.gradle"
-//apply from: "gradle/publishing/curseforge.gradle"
-apply from: "gradle/publishing/maven.gradle"
+apply from: "gradle/publishing/modrinth.gradle"
+apply from: "gradle/publishing/curseforge.gradle"
+//apply from: "gradle/publishing/maven.gradle"

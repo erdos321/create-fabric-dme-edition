@@ -255,5 +255,5 @@ publishing {
 }
 
 // see gradle/publishing.gradle for publishing
-// apply from: "gradle/publishing/publishing.gradle"
+apply from: "gradle/publishing/publishing.gradle"
 apply from: "gradle/compat/compat.gradle"
