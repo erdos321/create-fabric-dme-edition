@@ -3,16 +3,16 @@
   "id": "create",
   "version": "${version}",
 
-  "name": "Create Fabric Unofficial",
+  "name": "Create Fabric DM-Earth Edition",
   "description": "Create Fabric Unofficial version. Technology that empowers the player.",
   "authors": [
-    "KessokuTeaTime",
+    "DM-Earth",
     "Fabricators of Create",
     "Creators of Create"
   ],
   "contact": {
-    "issues": "https://github.com/KessokuTeaTime/create-fabric/issues",
-    "sources": "https://github.com/KessokuTeaTime/create-fabric"
+    "issues": "https://github.com/DM-Earth/create-fabric-dme-edition/issues",
+    "sources": "https://github.com/DM-Earth/create-fabric-dme-edition"
   },
 
   "license": "MIT",
