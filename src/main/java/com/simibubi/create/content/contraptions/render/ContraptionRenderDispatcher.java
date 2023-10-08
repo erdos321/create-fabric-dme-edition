@@ -36,7 +36,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 @Environment(EnvType.CLIENT)
@@ -114,7 +113,7 @@ public class ContraptionRenderDispatcher {
 		BlockPos origin = c.anchor;
 		int height = contraptionWorld.getHeight();
 		int minBuildHeight = contraptionWorld.getMinBuildHeight();
-		VirtualRenderWorld renderWorld = new VirtualRenderWorld(world, origin, height, minBuildHeight) {
+		VirtualRenderWorld renderWorld = new VirtualRenderWorld(world, minBuildHeight, height, origin) {
 			@Override
 			public boolean supportsFlywheel() {
 				return canInstance();
@@ -128,7 +127,7 @@ public class ContraptionRenderDispatcher {
 			// FIXME 1.20 this '0' used to be Block.UPDATE_SUPPRESS_LIGHT, yet VirtualRenderWorld didn't actually parse the flags at all
 			renderWorld.setBlock(info.pos(), info.state(), 0);
 
-		renderWorld.runLightingEngine();
+		renderWorld.runLightEngine();
 		return renderWorld;
 	}
 

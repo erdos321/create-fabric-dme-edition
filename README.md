@@ -1,6 +1,6 @@
 <p align="center"><img src="icon/400x400.png" alt="Logo" width="200"></p>
 <h1 align="center">Create Fabric DM-Earth Edition<br>
-	<a href="https://github.com/Creators-of-Create/Create/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Creators-of-Create/Create?style=flat&color=900c3f" alt="License"></a>
+	<a href="https://github.com/DM-Earth/create-fabric-dme-edition/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Creators-of-Create/Create?style=flat&color=900c3f" alt="License"></a>
     <br><br>
     <a href="https://fabricmc.net/"><img
         src="https://cdn.discordapp.com/attachments/705864145169416313/969720133998239794/fabric_supported.png"
@@ -14,14 +14,19 @@
     ></a>
 </h1>
 
-<p>Welcome to Create, a mod offering a variety of tools and blocks for Building, Decoration, and Aesthetic Automation.</p>
-<p>The added elements of tech are designed to leave as many design choices to the player as possible. With Create, the game isn't played inside a bunch of UIs, it challenges you to set up contraptions of animated components working together in many possible arrangements.</p>
-<p>Create's visual in-game documentation called 'Ponder' will guide you through all added mechanics and gadgets.</p>
-<p>&nbsp;</p>
+This mod is a forked version of [Create Fabric](https://modrinth.com/mod/create-fabric). Since it is a forked version, it **cannot be used with the original version**.
+This is a replacement program, not an add-on.
 
-<h3 align="center">Development</h3>
+The mod may be archived after the issue with [Create Fabric](https://modrinth.com/mod/create-fabric) itself is fixed, but for now,
+this is the only solution for 1.20.1 with [Create Fabric](https://modrinth.com/mod/create-fabric) using [Hephaestus](https://modrinth.com/mod/hephaestus) and [Sodium](https://modrinth.com/mod/sodium) 0.5.x.
 
-Looking to make an addon for Create? A template mod for a Fabric addon can be found
-[here](https://github.com/Fabricators-of-Create/create-fabric-addon-template),
-and a template for a multi-loader addon with Architectury can be found
-[here](https://github.com/Fabricators-of-Create/create-multiloader-addon-template).
+**Mods developed based on the original mod will also be unavailable (this has to do with the version of `PortingLib`)**.
+
+<h3 align="center">This fork fixes the following issues</h3>
+- Fixed a crash that occurred when installing with [Hephaestus](https://modrinth.com/mod/hephaestus). **(This was due to a problem with the version of `PortingLib` used by Create Fabric.)**
+- Fixed compatibility with [Sodium](https://modrinth.com/mod/sodium) 0.5.x **(this issue was caused by Flywheel Fabric)**.
+
+<h3 align="center">Development to compatible this version</h3>
+Change the PortingLib version of your Addon to `2.1.1142+1.20-entity-refactor` and change the version of your Create Fabric to this fork,
+then base the fix on this version of PortingLib.
+
