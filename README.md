@@ -1,6 +1,7 @@
 <p align="center"><img src="icon/400x400.png" alt="Logo" width="200"></p>
 <h1 align="center">Create Fabric DM-Earth Edition<br>
 	<a href="https://github.com/DM-Earth/create-fabric-dme-edition/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Creators-of-Create/Create?style=flat&color=900c3f" alt="License"></a>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/create-fabric/files"><img src="https://cf.way2muchnoise.eu/versions/create-fabric-dme-edition.svg" alt="Supported Versions"></a>
     <a href="https://discord.gg/sHUtFBxVdj"><img src="https://img.shields.io/discord/620934202875183104?color=5865f2&label=Discord&style=flat" alt="Discord"></a>
 	<a href="https://www.curseforge.com/minecraft/mc-mods/create-fabric-dme-edition"><img src="http://cf.way2muchnoise.eu/create-fabric-dme-edition.svg" alt="CurseForge"></a>
     <a href="https://modrinth.com/mod/create-fabric-dme-edition"><img src="https://img.shields.io/modrinth/dt/create-fabric-dme-edition?logo=modrinth&label=&suffix=%20&style=flat&color=242629&labelColor=5ca424&logoColor=1c1c1c" alt="Modrinth"></a>
