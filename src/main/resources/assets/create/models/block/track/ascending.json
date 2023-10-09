@@ -1,5 +1,5 @@
 {
-	"porting_lib:loader": "porting_lib:obj",
+	"loader": "porting_lib:obj",
 	"ambientocclusion": false,
 	"flip_v": true,
 	"model": "create:models/block/track/ascending.obj",
