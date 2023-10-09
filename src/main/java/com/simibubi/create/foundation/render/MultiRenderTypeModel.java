@@ -122,7 +122,7 @@ public class MultiRenderTypeModel extends ForwardingBakedModel {
 
 		public BakedModel build(BakedModel wrapped) {
 			if (!(wrapped instanceof Baked baked))
-				throw new IllegalArgumentException("Cannot create a MultiRenderTypeModel for a wrapped model that isn't CompositeModel.Baked");
+				throw new IllegalArgumentException("Cannot create a MultiRenderTypeModel for a wrapped model that isn't CompositeModel.Baked:" + wrapped);
 			if (isInvalid())
 				return wrapped;
 
