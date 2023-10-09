@@ -2,8 +2,6 @@ package com.simibubi.create.foundation.config.ui.compat.flywheel;
 
 import java.util.Locale;
 
-import io.github.fabricators_of_create.porting_lib.config.ConfigType;
-
 import org.jetbrains.annotations.NotNull;
 
 import com.jozufozu.flywheel.config.FlwConfig;
@@ -18,6 +16,7 @@ import com.simibubi.create.foundation.gui.widget.BoxWidget;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class FlwConfigScreen extends BaseConfigScreen {
 
@@ -40,7 +39,7 @@ public class FlwConfigScreen extends BaseConfigScreen {
 		addRenderableWidget(clientConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15 - 30, 200, 16).showingElement(clientText));
 
 		if (flwConfig != null) {
-			clientConfigWidget.withCallback(() -> linkTo(new FlwSubMenuConfigScreen(this, ConfigType.CLIENT, flwConfig)));
+			clientConfigWidget.withCallback(() -> linkTo(new FlwSubMenuConfigScreen(this, ModConfig.Type.CLIENT, flwConfig)));
 			clientText.withElementRenderer(BoxWidget.gradientFactory.apply(clientConfigWidget));
 		} else {
 			clientConfigWidget.active = false;

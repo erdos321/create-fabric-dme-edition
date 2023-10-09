@@ -21,22 +21,22 @@ import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
 
-import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSelectionList;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractSelectionList$EntryAccessor;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
 	protected static final int resetWidth = 28;//including 6px offset on either side
 
-	protected ModConfigSpec.ConfigValue<T> value;
-	protected ModConfigSpec.ValueSpec spec;
+	protected ForgeConfigSpec.ConfigValue<T> value;
+	protected ForgeConfigSpec.ValueSpec spec;
 	protected BoxWidget resetButton;
 	protected boolean editable = true;
 
-	public ValueEntry(String label, ModConfigSpec.ConfigValue<T> value, ModConfigSpec.ValueSpec spec) {
+	public ValueEntry(String label, ForgeConfigSpec.ConfigValue<T> value, ForgeConfigSpec.ValueSpec spec) {
 		super(label);
 		this.value = value;
 		this.spec = spec;

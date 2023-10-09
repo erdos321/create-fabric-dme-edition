@@ -11,19 +11,19 @@ import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 
-import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class CStress extends ConfigBase implements IStressValueProvider {
 
-	private final Map<ResourceLocation, ModConfigSpec.ConfigValue<Double>> capacities = new HashMap<>();
-	private final Map<ResourceLocation, ModConfigSpec.ConfigValue<Double>> impacts = new HashMap<>();
+	private final Map<ResourceLocation, ConfigValue<Double>> capacities = new HashMap<>();
+	private final Map<ResourceLocation, ConfigValue<Double>> impacts = new HashMap<>();
 
 	@Override
-	public void registerAll(ModConfigSpec.Builder builder) {
+	public void registerAll(Builder builder) {
 		builder.comment(".", Comments.su, Comments.impact)
 			.push("impact");
 		BlockStressDefaults.DEFAULT_IMPACTS.forEach((r, i) -> {
@@ -47,7 +47,7 @@ public class CStress extends ConfigBase implements IStressValueProvider {
 	public double getImpact(Block block) {
 		block = redirectValues(block);
 		ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
-		ModConfigSpec.ConfigValue<Double> value = getImpacts().get(key);
+		ConfigValue<Double> value = getImpacts().get(key);
 		if (value != null)
 			return value.get();
 		return 0;
@@ -57,7 +57,7 @@ public class CStress extends ConfigBase implements IStressValueProvider {
 	public double getCapacity(Block block) {
 		block = redirectValues(block);
 		ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
-		ModConfigSpec.ConfigValue<Double> value = getCapacities().get(key);
+		ConfigValue<Double> value = getCapacities().get(key);
 		if (value != null)
 			return value.get();
 		return 0;
@@ -96,11 +96,11 @@ public class CStress extends ConfigBase implements IStressValueProvider {
 		return "stressValues.v" + BlockStressDefaults.FORCED_UPDATE_VERSION;
 	}
 
-	public Map<ResourceLocation, ModConfigSpec.ConfigValue<Double>> getImpacts() {
+	public Map<ResourceLocation, ConfigValue<Double>> getImpacts() {
 		return impacts;
 	}
 
-	public Map<ResourceLocation, ModConfigSpec.ConfigValue<Double>> getCapacities() {
+	public Map<ResourceLocation, ConfigValue<Double>> getCapacities() {
 		return capacities;
 	}
 
