@@ -24,7 +24,7 @@ This is a replacement program, not an add-on.
 The mod may be archived after the issue with [Create Fabric](https://modrinth.com/mod/create-fabric) itself is fixed, but for now,
 this is the only solution for 1.20.1 with [Create Fabric](https://modrinth.com/mod/create-fabric) using [Hephaestus](https://modrinth.com/mod/hephaestus) and [Sodium](https://modrinth.com/mod/sodium) 0.5.x.
 
-**Mods developed based on the original mod will also be unavailable (this has to do with the version of `PortingLib`)**.
+**Some mods developed based on the original mod will also be incompatible (this has to do with the version of `PortingLib`)**.
 
 ### This fork fixes the following issues
 - Fixed a crash that occurred when installing with [Hephaestus](https://modrinth.com/mod/hephaestus). **(This was due to a problem with the version of `PortingLib` used by Create Fabric.)**
