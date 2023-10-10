@@ -30,7 +30,6 @@ this is the only solution for 1.20.1 with [Create Fabric](https://modrinth.com/m
 - Fixed a crash that occurred when installing with [Hephaestus](https://modrinth.com/mod/hephaestus). **(This was due to a problem with the version of `PortingLib` used by Create Fabric.)**
 - Fixed compatibility with [Sodium](https://modrinth.com/mod/sodium) 0.5.x **(this issue was caused by Flywheel Fabric)**.
 
-### Development to compatible this version
-Change the PortingLib version of your Addon to `2.1.1142+1.20-entity-refactor` and change the version of your Create Fabric to this fork,
-then base the fix on this version of PortingLib.
+### Development to compatible
+See #4
 
