@@ -31,5 +31,5 @@ this is the only solution for 1.20.1 with [Create Fabric](https://modrinth.com/m
 - Fixed compatibility with [Sodium](https://modrinth.com/mod/sodium) 0.5.x **(this issue was caused by Flywheel Fabric)**.
 
 ### Development to compatible
-See #4
+See [issue#4](https://github.com/DM-Earth/create-fabric-dme-edition/issues/4)
 
