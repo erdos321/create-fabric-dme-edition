@@ -5,6 +5,6 @@ No formatting, just plain text. CurseForge support for it is terrible.
 
 Change logging starts below:
 ----------
-- update Flywheel version
-- (Flywheel) sync from 0.6.10 forge version
-- (Flywheel) fix sodium 0.5.x compat
+- update Porting-Lib version to `2.1.1148+1.20-entity-refactor`
+- fix block models can't render issue ([#1](https://github.com/DM-Earth/create-fabric-dme-edition/issues/1), thanks alphamode help me)
+- revert config api change, now we back to forge config api port
