@@ -5,7 +5,6 @@ No formatting, just plain text. CurseForge support for it is terrible.
 
 Change logging starts below:
 ----------
-- update Porting-Lib version to `2.1.1158+1.20-entity-refactor`
-- fix cogwheels don't make any sounds when placed normally issue ([#6](https://github.com/DM-Earth/create-fabric-dme-edition/issues/6))
-- fix contraptions invisible issue ([#8](https://github.com/DM-Earth/create-fabric-dme-edition/issues/8))
-- fix fluid pipes can't connect to fluid containers issue ([#11](https://github.com/DM-Earth/create-fabric-dme-edition/issues/11))
+- Fixed Ingredients and results of recipes in sequenced assembly can't be looked up by REI.
+- Fixed REI will throw an exception if sequenced assembly contains more than one filling step.
+- Fixed Fluid tag ingredient of basin recipe only shows its first type of fluid in REI.

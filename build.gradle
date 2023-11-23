@@ -123,6 +123,10 @@ def compat(DependencyHandler deps) {
     deps.modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$cca_version")
     deps.modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$cca_version")
 
+    deps.modImplementation(deps.include("com.github.DM-Earth:CreateFabricREIBugFixDMEEdition:0.1.2-mc1.20.1")) {
+        exclude(group: "me.shedaniel")
+    }
+
     recipeViewers(deps)
 }
 
