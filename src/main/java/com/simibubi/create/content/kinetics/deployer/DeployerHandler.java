@@ -203,7 +203,7 @@ public class DeployerHandler {
 				success = true;
 			}
 
-			List<ItemEntity> capturedDrops = entity.captureDrops().stream().toList();
+			List<ItemEntity> capturedDrops = entity.finishCapturingDrops();
 			capturedDrops.forEach(e -> player.getInventory()
 				.placeItemBackInInventory(e.getItem()));
 			if (success)
